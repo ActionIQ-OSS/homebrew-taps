@@ -16,5 +16,5 @@ base_dir=$(cd "$(dirname "$0")" && pwd)
 formula_dir=$base_dir/Formula
 
 pushd $formula_dir &>/dev/null
-wget https://raw.githubusercontent.com/Homebrew/homebrew-core/master/Formula/$1.rb
+curl https://raw.githubusercontent.com/Homebrew/homebrew-core/master/Formula/$1.rb -o $1.rb
 popd &>/dev/null
