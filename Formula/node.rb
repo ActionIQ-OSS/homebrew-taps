@@ -6,6 +6,7 @@ class Node < Formula
   head "https://github.com/nodejs/node.git"
 
   bottle do
+    root_url "https://homebrew.bintray.com/bottles"
     sha256 "ceed388d101a5c8e4c24e087495196f9a61770b6b76d38b9e14930ebb768fb94" => :high_sierra
     sha256 "181bcb0de3d466124dcf2e83378afaf20c802cba6968e857e689dfb3980b6665" => :sierra
     sha256 "85106cd804040fe7a0bde68edfa3b27896951f6f313a4af90eda2d781750d07e" => :el_capitan

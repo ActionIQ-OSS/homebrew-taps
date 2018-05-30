@@ -5,6 +5,7 @@ class Gnupg < Formula
   sha256 "d95b361ee6ef7eff86af40c8c72bf9313736ac9f7010d6604d78bf83818e976e"
 
   bottle do
+    root_url "https://homebrew.bintray.com/bottles"
     sha256 "04b66440416de2c8573fb070e5186e838f2c48b208ceb8b4fdbf5e6431091e10" => :high_sierra
     sha256 "6170381a7ffcb15e93b5a201e5fcaa7badc1cf61519ec530bf06706f2450c710" => :sierra
     sha256 "e19fb1c8ca817a250efa13cfe2d89d62a69f760cc6b5e3c3ba8bbfac5d25690a" => :el_capitan

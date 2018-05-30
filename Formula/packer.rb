@@ -9,6 +9,7 @@ class Packer < Formula
   head "https://github.com/hashicorp/packer.git"
 
   bottle do
+    root_url "https://homebrew.bintray.com/bottles"
     cellar :any_skip_relocation
     sha256 "729ecbb484c2e6575ee8f25e3842cc9342cb5785d04e6f842c58ceb9a7c19610" => :sierra
     sha256 "b80c62c882784f5f11df70a10d5ed3708b2b88c72bd9c435f5691710536bc32a" => :el_capitan
