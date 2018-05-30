@@ -15,9 +15,9 @@ fi
 base_dir=$(cd "$(dirname "$0")" && pwd)
 formula_dir=$base_dir/Formula
 
-pushd $formula_dir &>/dev/null
-curl https://raw.githubusercontent.com/Homebrew/homebrew-core/master/Formula/$1.rb -o $1.rb
+echo $1
+
+curl https://raw.githubusercontent.com/Homebrew/homebrew-core/master/Formula/$1.rb -o /tmp/$1.rb
 # Add a line to the formula to make brew download from the correct root url
 # Otherwise it adds the name of the tap repo to the URL, which gives brew a 404
-awk '/bottle do/ { print; print "    root_url \"https://homebrew.bintray.com/bottles\""; next }1' $1.rb > $1.rb
-popd &>/dev/null
+awk '/bottle do/ { print; print "    root_url \"https://homebrew.bintray.com/bottles\""; next }1' /tmp/$1.rb > $formula_dir/$1.rb
