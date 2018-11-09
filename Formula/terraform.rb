@@ -1,18 +1,16 @@
-require "language/go"
-
 class Terraform < Formula
   desc "Tool to build, change, and version infrastructure"
   homepage "https://www.terraform.io/"
-  url "https://github.com/hashicorp/terraform/archive/v0.11.7.tar.gz"
-  sha256 "f9a2730dcd68dad754cf0efa017d51929a7f333a89d07ddff3c6ff7b2d1e8be3"
+  url "https://github.com/hashicorp/terraform/archive/v0.11.10.tar.gz"
+  sha256 "3cdf16618f7291ac70793f680d859223907039bdf559ca5b5e49fae7df2e736d"
   head "https://github.com/hashicorp/terraform.git"
 
   bottle do
-    root_url "https://homebrew.bintray.com/bottles"
     cellar :any_skip_relocation
-    sha256 "7bce9a18c6b533bce2794ebe0876387cc1639bc4689ee5d1ec9ff38f556e0e39" => :high_sierra
-    sha256 "675d1edc6917527a0724b84ac214d7ce0b95864a2680dd404843492c1803b81c" => :sierra
-    sha256 "db14ad02da3e44831145641e57500c6f80b6be056bfb10c05dc402a93e088043" => :el_capitan
+    rebuild 1
+    sha256 "23def7afb065ed8cfed4d933f260516089603353ce87fc25f2ac87bee63a86c5" => :mojave
+    sha256 "51904d661cfe27d9dbcb0e5c04d07692f08f5524ef5a3aeee915c7b5becb30b4" => :high_sierra
+    sha256 "b6d95e097001c82821c2fdede75d122764f6cbc51a350ef526c00c35527b3cfb" => :sierra
   end
 
   depends_on "go" => :build
@@ -20,23 +18,12 @@ class Terraform < Formula
 
   conflicts_with "tfenv", :because => "tfenv symlinks terraform binaries"
 
-  # stringer is a build tool dependency
-  go_resource "golang.org/x/tools" do
-    url "https://go.googlesource.com/tools.git",
-        :branch => "release-branch.go1.10"
-  end
-
   def install
     ENV["GOPATH"] = buildpath
     ENV.prepend_create_path "PATH", buildpath/"bin"
 
     dir = buildpath/"src/github.com/hashicorp/terraform"
     dir.install buildpath.children - [buildpath/".brew_home"]
-    Language::Go.stage_deps resources, buildpath/"src"
-
-    cd "src/golang.org/x/tools/cmd/stringer" do
-      system "go", "install"
-    end
 
     cd dir do
       # v0.6.12 - source contains tests which fail if these environment variables are set locally.
@@ -46,7 +33,7 @@ class Terraform < Formula
       arch = MacOS.prefer_64_bit? ? "amd64" : "386"
       ENV["XC_OS"] = "darwin"
       ENV["XC_ARCH"] = arch
-      system "make", "test", "bin"
+      system "make", "tools", "test", "bin"
 
       bin.install "pkg/darwin_#{arch}/terraform"
       prefix.install_metafiles
@@ -59,7 +46,6 @@ class Terraform < Formula
       variable "aws_region" {
           default = "us-west-2"
       }
-
       variable "aws_amis" {
           default = {
               eu-west-1 = "ami-b1cf19c6"
@@ -68,14 +54,12 @@ class Terraform < Formula
               us-west-2 = "ami-21f78e11"
           }
       }
-
       # Specify the provider and access details
       provider "aws" {
           access_key = "this_is_a_fake_access"
           secret_key = "this_is_a_fake_secret"
           region = "${var.aws_region}"
       }
-
       resource "aws_instance" "web" {
         instance_type = "m1.small"
         ami = "${lookup(var.aws_amis, var.aws_region)}"
