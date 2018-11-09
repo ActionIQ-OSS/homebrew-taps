@@ -3,7 +3,7 @@ require "language/go"
 class Terraform < Formula
   desc "Tool to build, change, and version infrastructure"
   homepage "https://www.terraform.io/"
-  url "https://github.com/hashicorp/terraform/archive/v0.11.7.tar.gz"
+  url "https://github.com/hashicorp/terraform/archive/v0.11.10.tar.gz"
   sha256 "f9a2730dcd68dad754cf0efa017d51929a7f333a89d07ddff3c6ff7b2d1e8be3"
   head "https://github.com/hashicorp/terraform.git"
 
