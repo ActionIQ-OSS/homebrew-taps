@@ -6,7 +6,7 @@ class Terraform < Formula
   head "https://github.com/hashicorp/terraform.git"
 
   bottle do
-    cellar :any_skip_relocation 
+    cellar :any_skip_relocation
     rebuild 1
     sha256 "23def7afb065ed8cfed4d933f260516089603353ce87fc25f2ac87bee63a86c5" => :mojave
     sha256 "51904d661cfe27d9dbcb0e5c04d07692f08f5524ef5a3aeee915c7b5becb30b4" => :high_sierra
@@ -70,3 +70,4 @@ class Terraform < Formula
     system "#{bin}/terraform", "graph"
   end
 end
+# poking github
