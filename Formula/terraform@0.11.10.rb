@@ -30,7 +30,7 @@ class TerraformAT01110 < Formula
       ENV.delete "AWS_ACCESS_KEY"
       ENV.delete "AWS_SECRET_KEY"
 
-      arch = MacOS.prefer_64_bit? ? "amd64" : "386"
+      arch = "amd64"
       ENV["XC_OS"] = "darwin"
       ENV["XC_ARCH"] = arch
       system "make", "tools", "test", "bin"
