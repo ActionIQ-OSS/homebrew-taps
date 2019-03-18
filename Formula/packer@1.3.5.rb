@@ -1,6 +1,6 @@
 require "language/go"
 
-class Packer%40135 < Formula
+class PackerAT135 < Formula
   desc "Tool for creating identical machine images for multiple platforms"
   homepage "https://packer.io"
   url "https://github.com/hashicorp/packer.git",
