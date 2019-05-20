@@ -1,1 +1,0 @@
-./kubernetes-helm@2.12.2.rb
