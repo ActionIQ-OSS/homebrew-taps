@@ -1,4 +1,4 @@
-class KubernetesHelm < Formula
+class KubernetesHelmAT270 < Formula
   desc "The Kubernetes package manager"
   homepage "https://helm.sh/"
   url "https://github.com/kubernetes/helm.git",
@@ -13,7 +13,7 @@ class KubernetesHelm < Formula
     sha256 "9bd7a2db55a057cbcccef388c89c9e10558f4dff8168c1b2dc3b704d227952f2" => :el_capitan
   end
 
-  depends_on :hg => :build
+  depends_on "glide" => :build
   depends_on "go" => :build
   depends_on "glide" => :build
 
