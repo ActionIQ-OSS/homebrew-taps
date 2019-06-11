@@ -1,4 +1,4 @@
-class TerraformAT01111 < Formula
+class Terraform < Formula
   desc "Tool to build, change, and version infrastructure"
   homepage "https://www.terraform.io/"
   url "https://github.com/hashicorp/terraform/archive/v0.11.11.tar.gz"
