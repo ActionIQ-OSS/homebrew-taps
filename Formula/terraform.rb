@@ -1,15 +1,15 @@
 class Terraform < Formula
   desc "Tool to build, change, and version infrastructure"
   homepage "https://www.terraform.io/"
-  url "https://github.com/hashicorp/terraform/archive/v0.11.11.tar.gz"
-  sha256 "aa60d15b06ac7a925a722a5ad0070bb1aa580f9ed54cfcc08378f84e25526e01"
+  url "https://github.com/hashicorp/terraform/archive/v0.12.3.tar.gz"
+  sha256 "7114326641fd5b1ab52d0d3e55a876fdc2bbc5e6869b25b291503faa68c875be"
   head "https://github.com/hashicorp/terraform.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "f5f3096f7493b4ce63bc1750539201e2931c7730b594f49ca3e852d851a3b571" => :mojave
-    sha256 "f450cc1b615d9fb9dcb10cb2e0a6182989e54ff55ddc3e07538a4f0da39e038e" => :high_sierra
-    sha256 "6956acc2bf7916b8b085c2b4542e962e5d8cabc307bcc7d690f4b13c8d483aeb" => :sierra
+    sha256 "72634c76829635a03a188de754b80acb663f26546974f80ca36eec8f34548628" => :mojave
+    sha256 "7481884e110710e803073765cb38d5fc4b4c5296967ae52614ffe4e9b9db6c7c" => :high_sierra
+    sha256 "ed508297bf55b6ff2ca48265362266446fe08fb84babda5cfb9d6c5841cbb76f" => :sierra
   end
 
   depends_on "go" => :build
@@ -29,12 +29,11 @@ class Terraform < Formula
       ENV.delete "AWS_ACCESS_KEY"
       ENV.delete "AWS_SECRET_KEY"
 
-      arch = "amd64"
       ENV["XC_OS"] = "darwin"
-      ENV["XC_ARCH"] = arch
+      ENV["XC_ARCH"] = "amd64"
       system "make", "tools", "test", "bin"
 
-      bin.install "pkg/darwin_#{arch}/terraform"
+      bin.install "pkg/darwin_amd64/terraform"
       prefix.install_metafiles
     end
   end
@@ -43,29 +42,26 @@ class Terraform < Formula
     minimal = testpath/"minimal.tf"
     minimal.write <<~EOS
       variable "aws_region" {
-          default = "us-west-2"
+        default = "us-west-2"
       }
-
       variable "aws_amis" {
-          default = {
-              eu-west-1 = "ami-b1cf19c6"
-              us-east-1 = "ami-de7ab6b6"
-              us-west-1 = "ami-3f75767a"
-              us-west-2 = "ami-21f78e11"
-          }
+        default = {
+          eu-west-1 = "ami-b1cf19c6"
+          us-east-1 = "ami-de7ab6b6"
+          us-west-1 = "ami-3f75767a"
+          us-west-2 = "ami-21f78e11"
+        }
       }
-
       # Specify the provider and access details
       provider "aws" {
-          access_key = "this_is_a_fake_access"
-          secret_key = "this_is_a_fake_secret"
-          region = "${var.aws_region}"
+        access_key = "this_is_a_fake_access"
+        secret_key = "this_is_a_fake_secret"
+        region     = var.aws_region
       }
-
       resource "aws_instance" "web" {
         instance_type = "m1.small"
-        ami = "${lookup(var.aws_amis, var.aws_region)}"
-        count = 4
+        ami           = var.aws_amis[var.aws_region]
+        count         = 4
       }
     EOS
     system "#{bin}/terraform", "init"
